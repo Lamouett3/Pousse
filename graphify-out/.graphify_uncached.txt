@@ -1,0 +1,9 @@
+/Users/driss/Downloads/Garden-v2/CLAUDE.md
+/Users/driss/Downloads/Garden-v2/DEPLOIEMENT.md
+/Users/driss/Downloads/Garden-v2/README.md
+/Users/driss/Downloads/Garden-v2/index.html
+/Users/driss/Downloads/Garden-v2/public/icon.svg
+/Users/driss/Downloads/Garden-v2/public/icons/apple-touch-icon.png
+/Users/driss/Downloads/Garden-v2/public/icons/icon-192.png
+/Users/driss/Downloads/Garden-v2/public/icons/icon-512.png
+/Users/driss/Downloads/Garden-v2/public/logo.svg

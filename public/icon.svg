@@ -1,0 +1,8 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pousse">
+  <rect x="6" y="6" width="108" height="108" rx="26" fill="#EAF1EC"/>
+  <path d="M60 90 C60 77 59 66 56 57" stroke="#3F6B49" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M56 61 C50 49 38 45 27 46 C29 61 41 67 54 64 C55 63 56 62 56 61 Z" fill="#7FB089"/>
+  <path d="M58 53 C60 39 72 31 85 31 C84 47 72 55 59 54 C58 54 58 53 58 53 Z" fill="#5A8262"/>
+  <circle cx="60" cy="41" r="11" fill="#F3C8D2"/>
+  <circle cx="60" cy="41" r="4.5" fill="#E9B85E"/>
+</svg>

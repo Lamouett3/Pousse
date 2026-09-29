@@ -1,0 +1,19 @@
+<svg width="400" height="160" viewBox="0 0 400 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo Pousse">
+  <rect width="400" height="160" fill="none"/>
+
+  <g transform="translate(16, 20)">
+    <svg width="120" height="120" viewBox="0 0 120 120">
+      <circle cx="60" cy="60" r="58" fill="#EAF1EC"/>
+      <path d="M60 92 C60 78 59 66 56 56" stroke="#3F6B49" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <path d="M56 60 C50 48 38 44 26 45 C28 60 40 66 54 63 C55 62 56 61 56 60 Z" fill="#7FB089"/>
+      <path d="M56 60 C50 50 40 47 30 47 C34 57 43 61 53 60 Z" fill="#9FC4A4"/>
+      <path d="M58 52 C60 38 72 30 86 30 C85 46 73 54 59 53 C58 53 58 52 58 52 Z" fill="#5A8262"/>
+      <path d="M58 52 C61 40 71 34 82 33 C80 44 71 50 59 50 Z" fill="#7FB089"/>
+      <circle cx="60" cy="40" r="11" fill="#F3C8D2"/>
+      <circle cx="60" cy="40" r="4.5" fill="#E9B85E"/>
+    </svg>
+  </g>
+
+  <text x="160" y="78" font-family="Nunito, system-ui, sans-serif" font-size="46" font-weight="700" fill="#2E4034">Pousse</text>
+  <text x="162" y="102" font-family="Nunito, system-ui, sans-serif" font-size="15" font-weight="500" fill="#7A8B7E" letter-spacing="0.5">jour apr&#232;s jour</text>
+</svg>

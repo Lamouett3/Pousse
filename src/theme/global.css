@@ -1,0 +1,280 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito Variable', 'Nunito', system-ui, -apple-system, sans-serif;
+  background: var(--green-pageBg); /* variables générées depuis tokens.js (themeCss) */
+  color: var(--text-title);
+  transition: background-color .3s ease, color .3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Lumière du matin sur le jardin : calque fixe derrière tout le contenu.
+   Halo clair en haut (ciel), reflet vert doux en bas à droite (feuillage). */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 55% at 50% -8%, rgba(251, 251, 246, 0.8), rgba(251, 251, 246, 0) 55%),
+    radial-gradient(85% 45% at 88% 108%, rgba(127, 176, 137, 0.22), rgba(127, 176, 137, 0) 62%),
+    linear-gradient(180deg, #dee8df 0%, #d6e1d8 55%, #cfdcd2 100%);
+}
+
+
+/* Jardin de nuit : même calque, lumière lunaire très douce */
+[data-theme="nuit"] body::before {
+  background:
+    radial-gradient(120% 55% at 50% -8%, rgba(232, 226, 196, 0.06), rgba(232, 226, 196, 0) 55%),
+    radial-gradient(85% 45% at 88% 108%, rgba(110, 154, 120, 0.12), rgba(110, 154, 120, 0) 62%),
+    linear-gradient(180deg, #141e17 0%, #121b15 55%, #0f1712 100%);
+}
+
+/* Jardin de nuit : l'illustration du jardin est tamisée pour ne pas éblouir */
+[data-theme="nuit"] .pousse-garden {
+  filter: brightness(0.62) saturate(0.8);
+  transition: filter .3s ease;
+}
+
+/* Focus visible sur tous les éléments interactifs (liens, zones role=button…) */
+a:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--green-primary);
+  outline-offset: 2px;
+}
+
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Range slider teinté jardin */
+input[type='range'] {
+  accent-color: var(--green-primary);
+}
+
+/* Scrollbar discrète */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-soft);
+  border-radius: 4px;
+}
+
+/* Accessibilité : focus visible */
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--green-primary);
+  outline-offset: 2px;
+}
+/* Silhouette SVG : retour tactile au toucher */
+.bs-zone:active {
+  transform: scale(0.96);
+  transform-origin: center;
+}
+
+/* Silhouette SVG : focus plus visible (stroke épais + couleur contrastée) */
+.bs-zone:focus-visible {
+  outline: none;
+  stroke: var(--green-primary) !important;
+  stroke-width: 3 !important;
+  stroke-dasharray: none !important;
+  filter: drop-shadow(0 0 3px rgba(90,130,98,0.4));
+}
+
+/* --- Animations globales --- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideDown {
+  from { opacity: 0; max-height: 0; }
+  to   { opacity: 1; max-height: 400px; }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes barGrow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes barFillX {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes popIn {
+  0%   { transform: scale(0.6); opacity: 0; }
+  70%  { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes checkDraw {
+  from { stroke-dashoffset: 20; }
+  to   { stroke-dashoffset: 0; }
+}
+/* Celebration overlay after saving an episode */
+@keyframes celebCircle {
+  0%   { transform: scale(0); opacity: 0; }
+  50%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes celebCheck {
+  0%   { stroke-dashoffset: 24; opacity: 0; }
+  30%  { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes celebParticle {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--px), var(--py)) scale(0); opacity: 0; }
+}
+@keyframes celebFade {
+  0%   { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.ti-loader-2 {
+  display: inline-block;
+  animation: spin .8s linear infinite;
+}
+
+/* --- Logo flower growth animation --- */
+@keyframes logoSeed {
+  0%   { transform: scale(0); opacity: 0; }
+  50%  { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(0); opacity: 0; }
+}
+@keyframes logoStemGrow {
+  from { stroke-dashoffset: 50; opacity: 0; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
+}
+@keyframes logoLeafLeft {
+  0%   { transform: scale(0) rotate(15deg); opacity: 0; }
+  70%  { transform: scale(1.05) rotate(-2deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes logoLeafRight {
+  0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+  70%  { transform: scale(1.05) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes logoBloom {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.2); }
+  80%  { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes logoCenter {
+  0%   { transform: scale(0); opacity: 0; }
+  70%  { transform: scale(1.3); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.logo-seed     { animation: logoSeed .5s ease .1s both; transform-origin: 60px 88px; }
+.logo-stem     { animation: logoStemGrow .6s ease .4s both; stroke-dasharray: 50; }
+.logo-leaf-l1  { animation: logoLeafLeft .5s cubic-bezier(.34,1.56,.64,1) .7s both; transform-origin: 56px 60px; }
+.logo-leaf-l2  { animation: logoLeafLeft .4s cubic-bezier(.34,1.56,.64,1) .85s both; transform-origin: 56px 60px; }
+.logo-leaf-r1  { animation: logoLeafRight .5s cubic-bezier(.34,1.56,.64,1) .9s both; transform-origin: 58px 52px; }
+.logo-leaf-r2  { animation: logoLeafRight .4s cubic-bezier(.34,1.56,.64,1) 1.05s both; transform-origin: 58px 52px; }
+.logo-bloom    { animation: logoBloom .6s cubic-bezier(.34,1.56,.64,1) 1.15s both; transform-origin: 60px 40px; }
+.logo-center   { animation: logoCenter .4s cubic-bezier(.34,1.56,.64,1) 1.5s both; transform-origin: 60px 40px; }
+
+.anim-fadeInUp   { animation: fadeInUp .45s ease both; }
+.anim-fadeIn     { animation: fadeIn .4s ease both; }
+.anim-scaleIn    { animation: scaleIn .4s cubic-bezier(.34,1.56,.64,1) both; }
+.anim-popIn      { animation: popIn .5s cubic-bezier(.34,1.56,.64,1) both; }
+.anim-slideDown  { animation: slideDown .35s ease both; overflow: hidden; }
+.anim-slideUp    { animation: slideUp .3s ease both; }
+.anim-barGrow    { animation: barGrow .6s cubic-bezier(.34,1.56,.64,1) both; transform-origin: bottom; }
+.anim-barFillX   { animation: barFillX .7s cubic-bezier(.16,1,.3,1) both; transform-origin: left; }
+
+/* Stagger delays for lists */
+.anim-d1 { animation-delay: .05s; }
+.anim-d2 { animation-delay: .1s; }
+.anim-d3 { animation-delay: .15s; }
+.anim-d4 { animation-delay: .2s; }
+.anim-d5 { animation-delay: .25s; }
+.anim-d6 { animation-delay: .3s; }
+.anim-d7 { animation-delay: .35s; }
+.anim-d8 { animation-delay: .4s; }
+
+/* Interactive element transitions */
+button {
+  transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease, border-radius .2s ease;
+}
+button:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+button:active {
+  transform: scale(0.97) translateY(0);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Print-only: caché à l'écran, visible à l'impression */
+.print-only { display: none; }
+
+/* Impression du rapport médecin (export PDF via le navigateur) */
+@media print {
+  body { background: #fff; }
+  body::before { display: none; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  .report-wrap { background: #fff !important; padding: 0 !important; }
+  .report-card {
+    border: none !important;
+    width: 100% !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .report-card * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .report-card > div { page-break-inside: avoid; }
+  nav { display: none !important; }
+  header { display: none !important; }
+  /* Forcer les barres animées à être visibles */
+  .anim-barGrow { animation: none !important; transform: scaleY(1) !important; }
+  .anim-barFillX { animation: none !important; transform: scaleX(1) !important; }
+}
+
+/* Base responsive */
+html, body { width: 100%; overflow-x: hidden; }
+img, svg { max-width: 100%; }
+
+/* Empêche le zoom involontaire sur les champs iOS (police >= 16px) */
+input[type="text"], input[type="number"], input[type="date"], select, textarea { font-size: 16px; }
+
+/* Placeholders : contraste suffisant pour être lisibles sans dominer */
+::placeholder { color: var(--text-muted); opacity: 0.8; }
+::-webkit-input-placeholder { color: var(--text-muted); opacity: 0.8; }
+
+/* Point « crise en cours » (accueil) — coupé par « réduire les animations » */
+@keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.8); } }
