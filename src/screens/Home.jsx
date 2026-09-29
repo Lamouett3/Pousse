@@ -759,6 +759,8 @@ function FeelingCard({ addCycleLog, cycleLogs, toast, gender = 'f', wide, ecoute
   const [mood, setMood] = useState(todayLog?.mood || null)
   const [energy, setEnergy] = useState(todayLog?.energy || null)
   const [symptoms, setSymptoms] = useState(todayLog?.symptoms || [])
+  const [freeSymptom, setFreeSymptom] = useState(todayLog?.freeSymptom || '')
+  const FREE_SYMPTOM_MAX = 500
   const symptomList = FEELING_SYMPTOMS.filter((x) => !x.only || x.only.includes(g))
   const cardRef = useRef(null)
 
@@ -816,7 +818,7 @@ function FeelingCard({ addCycleLog, cycleLogs, toast, gender = 'f', wide, ecoute
 
   function next() { setStep((n) => Math.min(n + 1, FEELING_STEPS.length - 1)) }
   function save() {
-    addCycleLog({ mood, energy, symptoms })
+    addCycleLog({ mood, energy, symptoms, freeSymptom: freeSymptom.trim() || undefined })
     setEditing(false)
     toast('Ressenti enregistré', 'success')
   }
@@ -871,8 +873,28 @@ function FeelingCard({ addCycleLog, cycleLogs, toast, gender = 'f', wide, ecoute
                 )
               })}
             </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <label style={{ fontSize: type.sm, color: colors.text.muted }}>Autre chose ? (facultatif)</label>
+              <textarea
+                value={freeSymptom}
+                onChange={(e) => setFreeSymptom(e.target.value.slice(0, FREE_SYMPTOM_MAX))}
+                placeholder="Décris tes symptômes avec tes mots…"
+                rows={2}
+                style={{
+                  width: '100%', padding: '10px 12px', fontSize: type.base,
+                  borderRadius: radius.small, border: `1.5px solid ${colors.border.soft}`,
+                  background: colors.green.surface, color: colors.text.body,
+                  fontFamily: 'inherit', resize: 'vertical', lineHeight: 1.4,
+                }}
+              />
+              {freeSymptom.length > 0 && (
+                <div style={{ fontSize: type.xs, color: colors.text.faint, textAlign: 'right' }}>
+                  {freeSymptom.length}/{FREE_SYMPTOM_MAX}
+                </div>
+              )}
+            </div>
             <PrimaryButton icon="ti-check" onClick={save} wide={wide}>
-              {symptoms.length ? 'Enregistrer mon ressenti' : 'Aucun symptôme, enregistrer'}
+              {symptoms.length || freeSymptom.trim() ? 'Enregistrer mon ressenti' : 'Aucun symptôme, enregistrer'}
             </PrimaryButton>
           </>
         )}

@@ -4,7 +4,7 @@
 //
 // Stockage : un ressenti par jour via addCycleLog / saveCycleLog
 // (clé `pousse.<compte>.cycleLogs.v1`), de la forme
-//   { day: 'AAAA-MM-JJ', createdAt, mood, energy, symptoms: [] }
+//   { day: 'AAAA-MM-JJ', createdAt, mood, energy, symptoms: [], freeSymptom? }
 // Les clés ci-dessous sont celles déjà enregistrées : ne pas les renommer.
 // =============================================================
 import { filterByPeriod } from './stats'
@@ -41,11 +41,12 @@ export function feelingParts(log, g = 'f') {
     log.mood && moodLabel(log.mood, g),
     log.energy && `énergie ${energyLabel(log.energy)?.toLowerCase()}`,
     ...(log.symptoms || []).map((k) => symptomLabel(k).toLowerCase()),
+    log.freeSymptom?.trim(),
   ].filter(Boolean)
 }
 
 // Un ressenti est-il vide (rien de coché) ?
-export const isEmptyFeeling = (log) => !log || (!log.mood && !log.energy && !(log.symptoms || []).length)
+export const isEmptyFeeling = (log) => !log || (!log.mood && !log.energy && !(log.symptoms || []).length && !log.freeSymptom?.trim())
 
 // Ressentis d'une période, triés du plus ancien au plus récent.
 // Réutilise filterByPeriod en situant chaque ressenti à midi de son jour.
@@ -67,11 +68,13 @@ export function summarizeFeelings(list, g = 'f') {
   const symptoms = count(list.flatMap((l) => l.symptoms || []))
   const tm = top(moods)
   const ts = top(symptoms)
+  const freeSymptomDays = list.filter((l) => l.freeSymptom?.trim()).length
   return {
     days: list.length,
     topMood: tm ? { label: moodLabel(tm[0], g), count: tm[1] } : null,
     lowEnergyDays: energies.basse || 0,
     topSymptom: ts ? { label: symptomLabel(ts[0]), count: ts[1] } : null,
+    freeSymptomDays,
   }
 }
 

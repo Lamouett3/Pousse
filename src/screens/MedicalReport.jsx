@@ -933,6 +933,7 @@ function FeelingsReport({ list, g, period, offset, title }) {
     !isDay && sum.topMood && { label: 'Humeur la plus fréquente', value: `${sum.topMood.label} (${sum.topMood.count} j)` },
     !isDay && { label: 'Énergie basse', value: `${sum.lowEnergyDays} j` },
     !isDay && sum.topSymptom && { label: 'Symptôme le plus fréquent', value: `${sum.topSymptom.label} (${sum.topSymptom.count} j)` },
+    !isDay && sum.freeSymptomDays > 0 && { label: 'Notes libres', value: `${sum.freeSymptomDays} j` },
   ].filter(Boolean)
   return (
     <Section title={title} icon="ti-mood-check">
@@ -950,10 +951,11 @@ function FeelingsReport({ list, g, period, offset, title }) {
         <table style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
           <thead>
             <tr>
-              <th scope="col" style={{ ...head, width: '24%' }}>Date</th>
-              <th scope="col" style={{ ...head, width: '22%' }}>Humeur</th>
-              <th scope="col" style={{ ...head, width: '20%' }}>Énergie</th>
-              <th scope="col" style={head}>Symptômes</th>
+              <th scope="col" style={{ ...head, width: '18%' }}>Date</th>
+              <th scope="col" style={{ ...head, width: '16%' }}>Humeur</th>
+              <th scope="col" style={{ ...head, width: '14%' }}>Énergie</th>
+              <th scope="col" style={{ ...head, width: '22%' }}>Symptômes</th>
+              <th scope="col" style={head}>Notes</th>
             </tr>
           </thead>
           <tbody>
@@ -963,6 +965,7 @@ function FeelingsReport({ list, g, period, offset, title }) {
                 <td style={cell}>{moodLabel(l.mood, g) || '—'}</td>
                 <td style={cell}>{energyLabel(l.energy) || '—'}</td>
                 <td style={cell}>{(l.symptoms || []).length ? l.symptoms.map((k) => symptomLabel(k)).join(', ') : '—'}</td>
+                <td style={{ ...cell, fontSize: 11, fontStyle: l.freeSymptom?.trim() ? 'italic' : 'normal' }}>{l.freeSymptom?.trim() || '—'}</td>
               </tr>
             ))}
           </tbody>

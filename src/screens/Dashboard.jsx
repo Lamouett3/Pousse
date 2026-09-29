@@ -311,7 +311,20 @@ function DayFeeling({ log, g }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: type.sm, fontWeight: 700, color: colors.green.primaryDark }}>
         <i className="ti ti-mood-check" style={{ fontSize: 18 }} aria-hidden="true" /> Ressenti du jour
       </div>
-      {log ? <FeelingChips log={log} g={g} /> : (
+      {log ? (
+        <>
+          <FeelingChips log={log} g={g} />
+          {log.freeSymptom?.trim() && (
+            <div style={{
+              fontSize: type.sm, color: colors.text.body, fontStyle: 'italic',
+              background: colors.green.surface, borderRadius: radius.small,
+              padding: '8px 10px', lineHeight: 1.4, overflowWrap: 'anywhere',
+            }}>
+              « {log.freeSymptom.trim()} »
+            </div>
+          )}
+        </>
+      ) : (
         <div style={{ fontSize: type.sm, color: colors.text.muted }}>Aucun ressenti noté ce jour-là.</div>
       )}
     </section>
@@ -354,7 +367,7 @@ function PeriodFeelings({ list, g, onOpenDay, wide }) {
               <span style={{ fontSize: type.sm, fontWeight: 700, color: colors.text.title, minWidth: 92, flexShrink: 0 }}>
                 {dayLabel(l.day, { weekday: 'short', day: 'numeric', month: 'short' })}
               </span>
-              <span style={{ flex: 1, fontSize: type.sm, color: colors.text.body }}>{feelingParts(l, g).join(', ')}</span>
+              <span style={{ flex: 1, fontSize: type.sm, color: colors.text.body, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{feelingParts(l, g).join(', ')}</span>
               <i className="ti ti-chevron-right" style={{ color: colors.text.soft }} aria-hidden="true" />
             </button>
           </li>
